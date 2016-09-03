@@ -1,27 +1,26 @@
 #include <stdio.h>
 #include <string.h>
 #include "mongoose/mongoose.h"
-
-static const char *html_form =
-  "<html><body>POST example."
-  "<form method=\"POST\" action=\"/handle_post_request\">"
-  "Input 1: <input type=\"text\" name=\"input_1\" /> <br/>"
-  "Input 2: <input type=\"text\" name=\"input_2\" /> <br/>"
-  "<input type=\"submit\" />"
-  "</form></body></html>\n";
+#include <json/json.h>
+#include <json/value.h>
 
 static int handler(struct mg_connection *conn) {
   char var1[500], var2[500];
 
   if (strcmp(conn->uri, "/handle_post_request") == 0) {
-    // User has submitted a form, show submitted data and a variable value
-    // Parse form data. var1 and var2 are guaranteed to be NUL-terminated
-    mg_get_var(conn, "project_id", var1, sizeof(var1));
-    mg_get_var(conn, "subject", var2, sizeof(var2));
+	if(strcmp(conn->request_method, "POST") != 0) {
+                // send error (we only care about HTTP GET)
+                    mg_send_header(conn, "Content-Type", "text/plain");
+    mg_send_data(conn, "no es POST", strlen("no es POST"));
+                // return not null means we handled the request
+                return 1;
+            }
 
     // Send reply to the client, showing submitted form values.
     // POST data is in conn->content, data length is in conn->content_len
     mg_send_header(conn, "Content-Type", "text/plain");
+    mg_send_data(conn, "POST ok", strlen("POST ok"));
+/*
     mg_printf_data(conn,
                    "Submitted data: [%.*s]\n"
                    "Submitted data length: %d bytes\n"
@@ -29,11 +28,11 @@ static int handler(struct mg_connection *conn) {
                    "input_2: [%s]\n",
                    conn->content_len, conn->content,
                    conn->content_len, var1, var2);
-  } else {
+  */
+} else {
     // Show HTML form.
-    mg_send_data(conn, html_form, strlen(html_form));
+    mg_send_data(conn, "mal la url", strlen("mal la url"));
   }
-
   return 1;
 }
 
