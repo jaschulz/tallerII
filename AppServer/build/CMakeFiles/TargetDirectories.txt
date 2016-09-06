@@ -1,0 +1,2 @@
+/home/javier/workspace/TallerII_AppServer/AppServer/build/CMakeFiles/main.dir
+/home/javier/workspace/TallerII_AppServer/AppServer/build/CMakeFiles/mongoose.dir

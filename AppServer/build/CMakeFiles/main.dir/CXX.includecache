@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/javier/workspace/TallerII_AppServer/AppServer/src/main.cpp
+unistd.h
+-
+stdlib.h
+-
+signal.h
+-
+mongoose/Server.h
+-
+mongoose/JsonController.h
+-
+
